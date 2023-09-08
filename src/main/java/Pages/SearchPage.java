@@ -45,14 +45,19 @@ public class SearchPage extends MainPage {
     public void clickFilter(String option)
     {
         List<WebElement> l= driver.findElements(filtersTrnxpath);
+        int oldvalue,newvalue;
         for (WebElement e : l)
         {
             try {
             System.out.println("in loop "+e.getAttribute("aria-label"));
+            oldvalue=getResultSize();
 
             if(e.getAttribute("aria-label").equalsIgnoreCase(option)) {
 
                 e.click();
+                newvalue=getResultSize();
+                Assert.assertTrue(oldvalue>newvalue,"the result of manual is not  less than the total");
+
             }
                }catch (StaleElementReferenceException exception)
                {

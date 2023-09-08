@@ -66,7 +66,6 @@ public class OpenBrowserTest extends BaseTest{
     public void tearDown()
     {
         driver.quit();
-      //  Log.info("Helllllo i am in tear down");
     }
     /* command used to generate allure report :
             allure generate allure-results --clean -o allure-report
