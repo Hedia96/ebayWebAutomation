@@ -1,11 +1,12 @@
 import Pages.HomePage;
 import Pages.SearchPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bouncycastle.crypto.digests.ParallelHash;
 import org.junit.Assert;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
-import utility.Log;
 
 import java.util.concurrent.TimeUnit;
 @Listeners(TestListener.class)
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 public class OpenBrowserTest extends BaseTest{
+
     @BeforeClass
     public void setup()
     {
@@ -27,9 +29,9 @@ public class OpenBrowserTest extends BaseTest{
     @Test
     public void TC1_validateMainPage()
     {
-        //Log.info("Test case TC1_validateMainPage ");
         HomePage homePage=new HomePage(driver);
-        homePage.validateHomeTab();
+        Assert.assertTrue( homePage.validateHomeTab());
+
     }
 
     @Parameters({"SearchCriteria"})
@@ -37,10 +39,9 @@ public class OpenBrowserTest extends BaseTest{
     public void TC2_validateSearch(String searchkey)
     {
         HomePage homePage = new HomePage(driver);
-
         SearchPage searchPage= homePage.enterSearchItem(searchkey);
         searchPage.validateSearchResult(searchkey);
-        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+    //    driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 
     }
     @Test
@@ -50,7 +51,7 @@ public class OpenBrowserTest extends BaseTest{
         Assert.assertTrue(
         searchPage.getResultSize() >0
         );
-        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+      //  driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 
 
     }

@@ -8,26 +8,21 @@ public class HomePage extends MainPage {
         super(driver);
     }
 
-    private By hometab = By.xpath("//*[@id=\"mainContent\"]/div[1]/ul/li[1]/span");
-    private By searchFld = By.xpath("//label[@class='gh-ar-hdn']/following::input[@type='text']");
-    private By searchBtn=By.xpath("//input[@value='Search']");
+    private By hometab = By.xpath("//*[@id=\"mainContent\"]");
+    private By searchFld = By.xpath("//input[@title='Search']");
+    private By searchBtn=By.xpath("//button[@value='Search']");
 
     public boolean validateHomeTab() {
         return driver.findElement(hometab).isDisplayed();
     }
 
     public SearchPage enterSearchItem(String searchcriteria) {
-        boolean resultstatus = true;
-        try {
-            driver.findElement(searchFld).sendKeys(searchcriteria);
-            driver.findElement(searchBtn).click();
-        } catch (Exception e) {
-            resultstatus = false;
-        }
-        if (resultstatus) {
-            return new SearchPage(driver);
-        }
-        return null;
+        log.info("In enter Search Item .....");
+        driver.findElement(searchFld).sendKeys(searchcriteria);
+        log.info("After search the text  .....");
+        driver.findElement(searchBtn).click();
+         return new SearchPage(driver);
+      
     }
 
 }

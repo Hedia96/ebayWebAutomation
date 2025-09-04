@@ -9,7 +9,7 @@ import org.testng.Assert;
 import java.util.List;
 
 public class SearchPage extends MainPage {
-    private By searchcountxpath = By.xpath("(//h1[@class='srp-controls__count-heading']/span)[1]");
+    private By searchcountxpath = By.xpath("(//div[@class=\"srp-controls__control srp-controls__count\"]//span)[1]");
     private By filtersTrnxpath =
             By.xpath ("//li[@class='x-refine__main__list--value' and @name='Transmission']//descendant::input");
    // private By transfilter = By.xpath("(//a[@class='srp-carousel-list__item-link']/descendant::span[text()=' - apply Transmission filter']/..)");
@@ -64,7 +64,6 @@ public class SearchPage extends MainPage {
                    driver.navigate().refresh();
 
                }
-               // System.out.println("the result after selecting is " + getResultSize());
             }
 
         }
