@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchPage extends MainPage {
@@ -13,7 +14,7 @@ public class SearchPage extends MainPage {
     private By filtersTrnxpath =
             By.xpath ("//li[@class='x-refine__main__list--value' and @name='Transmission']//descendant::input");
    // private By transfilter = By.xpath("(//a[@class='srp-carousel-list__item-link']/descendant::span[text()=' - apply Transmission filter']/..)");
-    private By titleResultsxpath = By.xpath("//div[@class='s-item__title']//span[@class=\"BOLD\"]");
+    private By titleResultsxpath = By.xpath("//div[@role=\"heading\"]//span");
 
     public SearchPage(WebDriver driver) {
         super(driver);
@@ -24,18 +25,21 @@ public class SearchPage extends MainPage {
      * @param searchkey
      * @return
      */
-    public void validateSearchResult(String searchkey) {
+    public List<String> validateSearchResult(String searchkey) {
         List<WebElement> titles = driver.findElements(titleResultsxpath);
+        List<String> textresults= new ArrayList<>();
         if (titles.size() > 0) {
             // check if the title contains searchcriteria
 
-            System.out.println(titles.get(0).getText());
+          log.info("The Search result  is {}", titles.size());
+          for(WebElement res :titles)
+          {
+              textresults.add(res.getText());
 
-            Assert.assertTrue(titles.get(0).getText().toLowerCase().contains(searchkey.toLowerCase()), "Result appears related to search criteria");
-
+          }
 
         }
-
+return  textresults;
     }
 
     public int getResultSize() {
@@ -51,16 +55,17 @@ public class SearchPage extends MainPage {
             try {
             System.out.println("in loop "+e.getAttribute("aria-label"));
             oldvalue=getResultSize();
-
+            log.info("The result value before clicking is  {}", oldvalue);
             if(e.getAttribute("aria-label").equalsIgnoreCase(option)) {
 
                 e.click();
                 newvalue=getResultSize();
                 Assert.assertTrue(oldvalue>newvalue,"the result of manual is not  less than the total");
-
+                log.info("The new value after clicking on option is {}",newvalue );
             }
                }catch (StaleElementReferenceException exception)
                {
+                   log.error("there is exception is  {}", exception);
                    driver.navigate().refresh();
 
                }
@@ -70,5 +75,3 @@ public class SearchPage extends MainPage {
 
 
 }
-////input[@class='checkbox__control']
-//and contains(@text,'Transmission')]

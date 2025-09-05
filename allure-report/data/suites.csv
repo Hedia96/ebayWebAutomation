@@ -1,5 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Fri Sep 08 21:44:57 EET 2023","Fri Sep 08 21:45:00 EET 2023","3250","Suite1","Regression1","OpenBrowserTest","OpenBrowserTest","TC4_validateFilterbyManual","TC4_validateFilterbyManual",""
-"passed","Fri Sep 08 21:44:57 EET 2023","Fri Sep 08 21:44:57 EET 2023","39","Suite1","Regression1","OpenBrowserTest","OpenBrowserTest","TC3_validateResultSize","TC3_validateResultSize",""
-"passed","Fri Sep 08 21:44:48 EET 2023","Fri Sep 08 21:44:49 EET 2023","597","Suite1","Regression1","OpenBrowserTest","OpenBrowserTest","TC1_validateMainPage","TC1_validateMainPage",""
-"passed","Fri Sep 08 21:44:49 EET 2023","Fri Sep 08 21:44:57 EET 2023","7839","Suite1","Regression1","OpenBrowserTest","OpenBrowserTest","TC2_validateSearch","TC2_validateSearch",""
