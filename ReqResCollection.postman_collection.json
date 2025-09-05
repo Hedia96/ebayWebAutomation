@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "63970791-c8ab-4f83-b09b-6f0166739468",
+		"name": "ReqResCollection",
+		"description": "Task for Luftborn to test API using Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17951606"
+	},
+	"item": [
+		{
+			"name": "GetReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData =pm.response.json();",
+							"pm.test(\"TC1_Status of Responise is 200\",function(){",
+							"pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"TC2_Verify the type of element data  in JSON Response is Array Type\",()=>{",
+							"",
+							"    const data= jsonData.data;",
+							"    pm.expect(data).to.be.an(\"array\");",
+							"}",
+							");",
+							"pm.test(\"TC3_Total number of users per page equals size of data element  \",function(){",
+							"pm.expect(jsonData.per_page == (data.length));",
+							"});",
+							"",
+							"//pm.test(\"TC4_Validate a structure of object in data  array\",function(){",
+							"  ",
+							"if (jsonData.data) {",
+							"    // Iterate through each item in the \"data\" array",
+							"    jsonData.data.forEach(function(item) {",
+							"        // Check the \"id\" and \"email\" values for each item",
+							"        pm.test(\"TC4_Check ID and Email for Item with ID \" + item.id, function() {",
+							"            pm.expect(item.id).to.be.a('number');",
+							"            pm.expect(item.email).to.be.a('string');",
+							"            pm.expect(item.first_name).to.be.a('string');",
+							"            pm.expect(item.avatar).to.be.a('string');s",
+							"            pm.expect(item.avatar).to.match(/\\.jpg$/);",
+							"            pm.expect(item.last_name).to.be.a('string');",
+							"        });",
+							"        ",
+							"    });",
+							"}",
+							"  //  pm.response.hasOwnProperty('support')",
+							"",
+							"//});",
+							"console.log(typeof(pm.response));",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseURL}}/api/users/?page={{page}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  var Res= pm.response.json();\r",
+							"//validate the status of response \r",
+							"pm.test(\"TC1_Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"// validate the response equals the collection varaibale as they sent in Reqest\r",
+							"\r",
+							"pm.test(\"TC2_validate the response contains the name  same as sending in  the request \",function(){\r",
+							"   var Res= pm.response.json();\r",
+							"   pm.expect(Res.name == pm.environment.get(\"username\"));\r",
+							"});\r",
+							"pm.test(\"TC3_validate the response contains the job same as sending in  the request \",function(){\r",
+							" \r",
+							"   pm.expect(Res.job == pm.environment.get(\"job\"));\r",
+							"});\r",
+							"pm.test(\"TC4_Respnose of create user has id element\",function()\r",
+							"{\r",
+							"pm.expect(Res.id!= null);\r",
+							"});\r",
+							"//console.log(pm.environment.get(\"username\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{username}}\",\n    \"job\":\"{{job}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/users",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseURL",
+			"value": "https://reqres.in",
+			"type": "string"
+		},
+		{
+			"key": "page",
+			"value": "2"
+		}
+	]
+}
